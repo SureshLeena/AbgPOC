@@ -287,12 +287,12 @@ function SearchResults() {
 
   const getImage = async (item) => {
     const query = item.description;
-    const apiKey = "AIzaSyA5LOTZBMTRYHbTcwsjGauq8FLPWCMA6M8";
+    const apiKey = "AIzaSyDZhu8OVrjy7fy2LfKTUBg8ZQLCcg0FBHk";
     // const apiKey = "AIzaSyALy3vKOEc4mE3m8LTAXnQJXtbD2S56Mek"
     const imageSearchURL =
       "https://www.googleapis.com/customsearch/v1?key=" +
       apiKey +
-      "&cx=07773ad42682842a5&searchType=image&q=" +
+      "&cx=d5c34a844f87c4f8f&searchType=image&q=" +
       encodeURIComponent(query);
     //  const imageSearchURL = "https://pixabay.com/api/?key=47385759-c536382953d3a82b4b3875926&q="+ item.title +"&image_type=photo&pretty=true&orientation=horizontal"
     try {
@@ -315,12 +315,12 @@ function SearchResults() {
   };
 
   const getTopBannerImage = async () => {
-    const apiKey = "AIzaSyA5LOTZBMTRYHbTcwsjGauq8FLPWCMA6M8";
+    const apiKey = "AIzaSyDZhu8OVrjy7fy2LfKTUBg8ZQLCcg0FBHk";
     // const apiKey = "AIzaSyALy3vKOEc4mE3m8LTAXnQJXtbD2S56Mek"
     const imageSearchURL =
       "https://www.googleapis.com/customsearch/v1?key=" +
       apiKey +
-      "&cx=07773ad42682842a5&searchType=image&q=" +
+      "&cx=d5c34a844f87c4f8f&searchType=image&q=" +
       encodeURIComponent(query);
     //  const imageSearchURL = "https://pixabay.com/api/?key=47385759-c536382953d3a82b4b3875926&q="+ item.title +"&image_type=photo&pretty=true&orientation=horizontal"
     try {
