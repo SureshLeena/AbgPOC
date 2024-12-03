@@ -3,12 +3,14 @@ import ListThemeSearchResults from "./ListThemeResult";
 import SearchResultsHeader from "./SearchResultHeader";
 import { useSearchParams } from "react-router-dom";
 import { SkeletonCard, SkeletonCard2 } from "../components/Skeleton";
+import TimelineThemeSearchResults from "./TimelineSearchResult";
 
 let tempImages = {};
 function SearchResults() {
   // Access query parameter
   const params = new URLSearchParams(window.location.search);
   const query = params.get("q");
+  const template = params.get("template") || 'list';
   console.log(query, params);
   //   const theme = "List";
 
@@ -19,9 +21,11 @@ function SearchResults() {
   const [subTitle, setSubTitle] = React.useState("");
 
   const [images, setImages] = useState(tempImages);
+  const [topBannerImage, setTopBannerImage] = useState();
 
   useEffect(() => {
     makeSearchRequestToServer(query);
+    getTopBannerImage()
   }, [query]);
 
   //   const parseNewsContent = (content) => {
@@ -310,6 +314,80 @@ function SearchResults() {
     }
   };
 
+  const getTopBannerImage = async () => {
+    const apiKey = "AIzaSyA5LOTZBMTRYHbTcwsjGauq8FLPWCMA6M8";
+    // const apiKey = "AIzaSyALy3vKOEc4mE3m8LTAXnQJXtbD2S56Mek"
+    const imageSearchURL =
+      "https://www.googleapis.com/customsearch/v1?key=" +
+      apiKey +
+      "&cx=07773ad42682842a5&searchType=image&q=" +
+      encodeURIComponent(query);
+    //  const imageSearchURL = "https://pixabay.com/api/?key=47385759-c536382953d3a82b4b3875926&q="+ item.title +"&image_type=photo&pretty=true&orientation=horizontal"
+    try {
+      const response = await fetch(imageSearchURL);
+      const data = await response.json();
+      setTopBannerImage(data.items[0]?.link);
+    } catch (error) {
+      console.log("DATAAAAAA error :::::: ", error);
+    }
+  };
+
+  const RenderListViewContent = () => {
+    return results.length > 0 ? (
+      <ListThemeSearchResults results={results} images={images} />
+    ) : (
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 400}}>
+
+        <img
+          src={require("../assets/loader.gif")}
+          // className="w-full shadow-lg"
+          style={{
+            width: 100,
+            height: 100,
+            // maxHeight: "250px",
+            // backgroundSize: "cover",
+            // backgroundColor: "#F5CC9E",
+            // objectFit: 'fit',
+          }}
+        />
+
+      </div>
+      // <div style={{marginTop: 20 }}>
+      //   <SkeletonCard />
+      //   <div style={{marginTop: 50 }}>
+
+      //   <SkeletonCard2 />
+      //   </div>
+      // </div>
+      
+    )
+  }
+
+  const RenderTimelineViewContent = () => {
+    return results.length > 0 ? (
+      <TimelineThemeSearchResults results={results} images={images} />
+    ) : (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 400}}>
+
+        <img
+          src={require("../assets/loader.gif")}
+          // className="w-full shadow-lg"
+          style={{
+            width: 100,
+            height: 100,
+            // maxHeight: "250px",
+            // backgroundSize: "cover",
+            // backgroundColor: "#F5CC9E",
+            // objectFit: 'fit',
+          }}
+        />
+
+      </div>
+      
+    )
+  }
+
   return (
     <div
       style={{
@@ -329,22 +407,15 @@ function SearchResults() {
       >
         <SearchResultsHeader
           header={query ? query : "Search Results"}
+          template={template}
           // subHeader={subTitle}
+          imageURL={topBannerImage}
         />
-        {results.length > 0 ? (
-          <ListThemeSearchResults results={results} images={images} />
-        ) : (
-          <div style={{marginTop: 20 }}>
-            <SkeletonCard />
-            <div style={{marginTop: 50 }}>
-
-            <SkeletonCard2 />
-            </div>
-          </div>
-          
-        )}
-
-        <div style={{ bottom: 0, height: 50, background: "#71D671" }} />
+        
+        {
+          (template == 'timeline') ? RenderTimelineViewContent() : RenderListViewContent()
+        }
+        {results.length > 0 && <div style={{ bottom: 0, height: 50, background:  (template == 'timeline') ? '#ED736B' : "#71D671" }} /> }
       </div>
     </div>
   );
