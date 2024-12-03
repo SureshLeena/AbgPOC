@@ -82,7 +82,6 @@ function TimelineThemeResultCard({ num, info, image }) {
         {image ? (
           <img
             src={image}
-            alt="Generated content"
             className="w-full shadow-lg"
             style={{
               width: 200,
@@ -91,9 +90,11 @@ function TimelineThemeResultCard({ num, info, image }) {
               backgroundSize: "cover",
               backgroundColor: "#D9D9D9",
               zIndex: 10,
+              overflow: 'hidden',
+              objectFit: 'cover'
             }}
           />
-        ) : (
+         ) : (
           <div
             style={{
               width: 200,
@@ -104,7 +105,7 @@ function TimelineThemeResultCard({ num, info, image }) {
               zIndex: 10,
             }}
           ></div>
-        )}
+        )} 
       </div>
     );
   };

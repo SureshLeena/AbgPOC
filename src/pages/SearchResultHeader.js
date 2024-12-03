@@ -54,7 +54,7 @@ function SearchResultsHeader({ template = "list", header, subHeader, imageURL })
             maxHeight: "250px",
             backgroundSize: "cover",
             backgroundColor: "#F5CC9E",
-            objectFit: 'fit',
+            objectFit: 'cover',
           }}
         />
         <div
